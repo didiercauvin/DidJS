@@ -19,6 +19,12 @@ define(function() {
 				y : properties.y,
 				radius : properties.radius,
 				velX : properties.velX,
+				goOnXAxis : function(xPosIncr) {
+					this.x += xPosIncr;
+				},
+				goOnYAxis : function(yPosIncr) {
+					this.y += yPosIncr;
+				},
 				draw : function(ctx) {
 					ctx.beginPath();
 		            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
@@ -35,6 +41,12 @@ define(function() {
 				y : properties.y,
 				side : properties.side,
 				velX : properties.velX,
+				goOnXAxis : function(xPosIncr) {
+					this.x += xPosIncr;
+				},
+				goOnYAxis : function(yPosIncr) {
+					this.y += yPosIncr;
+				},
 				draw : function(ctx) {
 					ctx.beginPath();
 			        ctx.rect(this.x, this.y, this.side, this.side);
