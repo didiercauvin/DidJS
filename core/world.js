@@ -1,9 +1,10 @@
-define(['core/Renderer', 'core/ShapeFactory'], function(Renderer, ShapeFactory) {
+define(['core/Renderer', 'core/ShapeFactory', 'core/Movement'], function(Renderer, ShapeFactory, Movement) {
 	function World(canvasName, width, height) {
 		var _renderer;
 		var _shapeFactory;
 		var _worldObjects = [];
 		var _keys = [];
+		var movement = new Movement();
 
 		_renderer = new Renderer(canvasName, width, height);
 		_shapeFactory = new ShapeFactory();
@@ -35,18 +36,57 @@ define(['core/Renderer', 'core/ShapeFactory'], function(Renderer, ShapeFactory) 
 			_worldObjects.push(gameObject);
 		}
 
-		var defaultKeyboard = {
-			_keys : []
-		}
+		var defaultKeyboardKeys = [
+			{
+				name : 'left',
+				key : 37,
+				strokeMethod: function() {
+					movement.goToXAxis(-1);
+				}
+			},
+			{
+				name : 'up',
+				key : 38,
+				strokeMethod: function() {
+					movement.goToYAxis(-1);
+				}
+			},
+			{
+				name : 'right',
+				key : 39,
+				strokeMethod: function() {
+					movement.goToXAxis(1);
+				}
+			},
+			{
+				name : 'down',
+				key : 40,
+				strokeMethod: function() {
+					movement.goToYAxis(1);
+				}
+			}
+		]
 
-		this.addKeyboard = function(keyboard) {
-			if (!keyboard) {
-				keyboard = defaultKeyboard;
-				
+		this.addKeyboard = function(keys) {
+			var keyboard = { _keys : keys };
+
+
+			if (!keys) {
+				keyboard._keys = defaultKeyboardKeys;
+			}
+
+			keyboard.setStrokeMethodFor = function(keyName, method) {
+				this._keys.forEach(function(key) {
+					if (key.name === keyName) {
+						key.strokeMethod = method;
+						return;
+					}
+				});
 			}
 
 			keyboard.connectTo = function(gObject) {
 				console.log('keyboard connected to object');
+				movement.setTo(gObject);
 				gObject.keyboard = this;
 				gObject.keyboard.parent = gObject;
 
