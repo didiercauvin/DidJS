@@ -15,28 +15,35 @@ define(['core/didjs', 'core/world'], function(DidJS, World) {
 		velX : 2
 	});
 
-	var keyboard = DidJS.world.addKeyboard();
+	var keyboard = DidJS.world.addKeyboard().connectTo(square);
 	
-	keyboard.connectTo(square);
-
-	square.keyboard.stroke = function(keyCode) {
-		switch(keyCode) {
-			case 37 :
-				this.parent.goOnXAxis(-1);
-				break;
-			case 38 :
-				this.parent.goOnYAxis(-1);
-				break;
-			case 39 :
-				this.parent.goOnXAxis(1);
-				break;
-			case 40 :
-				this.parent.goOnYAxis(1);
-				break;
-			default:
-				break;
+	keyboard.addButton({
+		key : 37,
+		strokeMethod : function() {
+			console.log('left key stroken')
 		}
-	};
+	});
+
+	keyboard.addButton({
+		key : 38,
+		strokeMethod : function() {
+			console.log('up key stroken')
+		}
+	});
+
+	keyboard.addButton({
+		key : 39,
+		strokeMethod : function() {
+			console.log('right key stroken')
+		}
+	});
+
+	keyboard.addButton({
+		key : 40,
+		strokeMethod : function() {
+			console.log('down key stroken')
+		}
+	});
 
 	DidJS.world.add(circle);
 	DidJS.world.add(square);

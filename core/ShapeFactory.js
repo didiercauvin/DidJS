@@ -1,4 +1,4 @@
-define(function() {
+define(['core/ShapeRenderer'], function(ShapeRenderer) {
 	function ShapeFactory() {
 
 		this.create = function(shape, properties) {
@@ -20,17 +20,13 @@ define(function() {
 				radius : properties.radius,
 				velX : properties.velX,
 				goOnXAxis : function(xPosIncr) {
-					this.x += xPosIncr;
+					this.x += this.velX * xPosIncr;
 				},
 				goOnYAxis : function(yPosIncr) {
 					this.y += yPosIncr;
 				},
 				draw : function(ctx) {
-					ctx.beginPath();
-		            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-		            ctx.closePath();
-		            ctx.stroke();
-		            ctx.fill();
+					ShapeRenderer.drawCircle(this, ctx);
 				}
 			}
 		}
@@ -42,17 +38,13 @@ define(function() {
 				side : properties.side,
 				velX : properties.velX,
 				goOnXAxis : function(xPosIncr) {
-					this.x += xPosIncr;
+					this.x += this.velX * xPosIncr;
 				},
 				goOnYAxis : function(yPosIncr) {
 					this.y += yPosIncr;
 				},
 				draw : function(ctx) {
-					ctx.beginPath();
-			        ctx.rect(this.x, this.y, this.side, this.side);
-			        ctx.fill();
-			        ctx.lineWidth = 1;
-			        ctx.stroke();
+					ShapeRenderer.drawSquare(this, ctx);
 				}
 			}
 		}

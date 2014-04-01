@@ -36,21 +36,33 @@ define(['core/Renderer', 'core/ShapeFactory'], function(Renderer, ShapeFactory) 
 		}
 
 		var defaultKeyboard = {
-			leftKey : '37',
-			rightKey : '39',
-			upKey : '38',
-			downKey : '40'
+			_keys : []
 		}
 
 		this.addKeyboard = function(keyboard) {
 			if (!keyboard) {
 				keyboard = defaultKeyboard;
+				
 			}
 
 			keyboard.connectTo = function(gObject) {
 				console.log('keyboard connected to object');
 				gObject.keyboard = this;
 				gObject.keyboard.parent = gObject;
+
+				return this;
+			}
+
+			keyboard.addButton = function(buttonProperties) {
+				this._keys.push(buttonProperties);
+			}
+
+			keyboard.stroke = function(keyCode) {
+				this._keys.forEach(function(keyProperties) {
+					if (keyCode == keyProperties.key) {
+						keyProperties.strokeMethod();
+					}
+				})
 			}
 
 			return keyboard;
