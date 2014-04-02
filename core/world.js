@@ -40,36 +40,35 @@ define(['core/Renderer', 'core/ShapeFactory', 'core/Movement'], function(Rendere
 			{
 				name : 'left',
 				key : 37,
-				strokeMethod: function() {
-					movement.goToXAxis(-1);
+				strokeMethod: function(gObject) {
+					movement.move(gObject).toXAxis(-1);
 				}
 			},
 			{
 				name : 'up',
 				key : 38,
-				strokeMethod: function() {
-					movement.goToYAxis(-1);
+				strokeMethod: function(gObject) {
+					movement.move(gObject).toYAxis(-1);
 				}
 			},
 			{
 				name : 'right',
 				key : 39,
-				strokeMethod: function() {
-					movement.goToXAxis(1);
+				strokeMethod: function(gObject) {
+					movement.move(gObject).toXAxis(1);
 				}
 			},
 			{
 				name : 'down',
 				key : 40,
-				strokeMethod: function() {
-					movement.goToYAxis(1);
+				strokeMethod: function(gObject) {
+					movement.move(gObject).toYAxis(1);
 				}
 			}
 		]
 
-		this.addKeyboard = function(keys) {
+		this.createKeyboard = function(keys) {
 			var keyboard = { _keys : keys };
-
 
 			if (!keys) {
 				keyboard._keys = defaultKeyboardKeys;
@@ -86,7 +85,6 @@ define(['core/Renderer', 'core/ShapeFactory', 'core/Movement'], function(Rendere
 
 			keyboard.connectTo = function(gObject) {
 				console.log('keyboard connected to object');
-				movement.setTo(gObject);
 				gObject.keyboard = this;
 				gObject.keyboard.parent = gObject;
 
@@ -98,21 +96,40 @@ define(['core/Renderer', 'core/ShapeFactory', 'core/Movement'], function(Rendere
 			}
 
 			keyboard.stroke = function(keyCode) {
+				var gObject = this.parent;
 				this._keys.forEach(function(keyProperties) {
 					if (keyCode == keyProperties.key) {
-						keyProperties.strokeMethod();
+						keyProperties.strokeMethod(gObject);
 					}
 				})
+			}
+
+			keyboard.redefineKeys = function(keysToMap) {
+				var self = this;
+				keysToMap.forEach(function(keyToMap) {
+					self._keys.forEach(function(key) {
+						if (keyToMap.name == key.name) {
+							key.key = keyToMap.key;
+							return;
+						}
+					})
+				})
+
+				return this;
+			}
+
+			keyboard.redefineKey = function(keyToMap) {
+				return this.redefineKeys([keyToMap]);
 			}
 
 			return keyboard;
 		}
 
-		document.body.addEventListener("keydown", function(e) {
+		window.addEventListener("keydown", function(e) {
 			_keys.push(e.keyCode);
 		});
 
-		document.body.addEventListener("keyup", function(e) {
+		window.addEventListener("keyup", function(e) {
 			_keys.splice(0, e.keyCode);
 		});
 

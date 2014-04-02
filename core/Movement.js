@@ -1,19 +1,19 @@
 define(function() {
-	function Movement(gObject) {
-		this.shape = {};
+	function Movement() {
+		
 	}
 
-	Movement.prototype.setTo = function(gObject) {
-		this.shape = gObject;
+	Movement.prototype.move = function(gObject) {
+		return { 
+			toXAxis : function(direction) {
+				gObject.x += gObject.velX * direction;
+			},
+			toYAxis : function(direction) {
+				gObject.y += direction;
+			}
+		}
 	}
 
-	Movement.prototype.goToXAxis = function(direction) {
-		this.shape.x += this.shape.velX * direction;
-	}
-
-	Movement.prototype.goToYAxis = function(direction) {
-		this.shape.y += direction;
-	}
 
 	return Movement;
 
