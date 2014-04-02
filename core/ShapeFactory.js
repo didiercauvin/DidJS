@@ -19,12 +19,6 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				y : properties.y,
 				radius : properties.radius,
 				velX : properties.velX,
-				goOnXAxis : function(xPosIncr) {
-					this.x += this.velX * xPosIncr;
-				},
-				goOnYAxis : function(yPosIncr) {
-					this.y += yPosIncr;
-				},
 				draw : function(ctx) {
 					ShapeRenderer.drawCircle(this, ctx);
 				}
@@ -37,12 +31,6 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				y : properties.y,
 				side : properties.side,
 				velX : properties.velX,
-				goOnXAxis : function(xPosIncr) {
-					this.x += this.velX * xPosIncr;
-				},
-				goOnYAxis : function(yPosIncr) {
-					this.y += yPosIncr;
-				},
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
 				}
