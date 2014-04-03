@@ -1,30 +1,29 @@
-define(['core/didjs', 'core/world', 'core/Movement'], function(DidJS, World, Movement) {
-	DidJS.world = new World('mycanvas');
+define(['core/didjs', 'core/world', 'core/Movement', 'core/Vector'], function(DidJS, World, Movement, Vector) {
+	
+	DidJS.Game.register('Resources/').asPathFor('Assets');
+	
+	DidJS.Game.world = new World('mycanvas');
 
-	DidJS.world.register('Resources/').asPathFor('Assets');
-
-	var circle = DidJS.world.create('circle', {
-		x : 100,
-		y : 100,
+	var circle = DidJS.Game.world.create('circle').withProperties({
+		position : DidJS.Vector(100, 100),
 		radius : 30,
 		velX : 0
 	});
 
-	var square = DidJS.world.create('square', {
-		x : 300,
-		y : 200,
+	var square = DidJS.Game.world.create('square').withProperties({
+		position : DidJS.Vector(300, 200),
 		side : 50,
 		velX : 2
 	});
 
-	var rectangle = DidJS.world.create('rectangle', {
-		x : 600,
-		y : 400,
+	var rectangle = DidJS.Game.world.create('rectangle').withProperties({
+		position : DidJS.Vector(600, 400),
 		width : 100,
 		height : 50,
 		velX : 3
 	});
 
+	//var player = DidJS.Game.GameObject
 
 	var movement = new Movement();
 
@@ -50,14 +49,14 @@ define(['core/didjs', 'core/world', 'core/Movement'], function(DidJS, World, Mov
 
 
 
-	var keyboard = DidJS.world.createKeyboard().connectTo(square);
+	var keyboard = DidJS.Game.world.createKeyboard().connectTo(square);
 
 	//square.keyboard.redefineKey(customKey);
 
-	DidJS.world.add(circle);
-	DidJS.world.add(square);
-	DidJS.world.add(rectangle);
+	DidJS.Game.world.add(circle);
+	DidJS.Game.world.add(square);
+	DidJS.Game.world.add(rectangle);
 
 
-	DidJS.world.render();
+	DidJS.Game.world.render();
 })
