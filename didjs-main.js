@@ -1,6 +1,8 @@
 define(['core/didjs', 'core/world', 'core/Movement'], function(DidJS, World, Movement) {
 	DidJS.world = new World('mycanvas');
 
+	DidJS.world.register('Resources/').asPathFor('Assets');
+
 	var circle = DidJS.world.create('circle', {
 		x : 100,
 		y : 100,
@@ -13,6 +15,14 @@ define(['core/didjs', 'core/world', 'core/Movement'], function(DidJS, World, Mov
 		y : 200,
 		side : 50,
 		velX : 2
+	});
+
+	var rectangle = DidJS.world.create('rectangle', {
+		x : 600,
+		y : 400,
+		width : 100,
+		height : 50,
+		velX : 3
 	});
 
 
@@ -46,6 +56,7 @@ define(['core/didjs', 'core/world', 'core/Movement'], function(DidJS, World, Mov
 
 	DidJS.world.add(circle);
 	DidJS.world.add(square);
+	DidJS.world.add(rectangle);
 
 
 	DidJS.world.render();

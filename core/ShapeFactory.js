@@ -8,6 +8,9 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 			else if (shape === 'square') {
 				return createSquare(properties);
 			}
+			else if (shape === 'rectangle') {
+				return createRectangle(properties);
+			}
 			else {
 				throw 'Shape ' + shape + ' unknown';
 			}
@@ -33,6 +36,19 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
+				}
+			}
+		}
+
+		var createRectangle = function(properties) {
+			return {
+				x : properties.x,
+				y : properties.y,
+				width : properties.width,
+				height : properties.height,
+				velX : properties.velX,
+				draw : function(ctx) {
+					ShapeRenderer.drawRectangle(this, ctx);
 				}
 			}
 		}
