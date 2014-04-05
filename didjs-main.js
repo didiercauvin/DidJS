@@ -9,8 +9,6 @@ require(['core/didjs'], function(DidJS) {
 	
 	function gameInit() {
 		DidJS.Game.world = new DidJS.World('mycanvas');
-		DidJS.Game.world.setBoundariesOnX(0, 800);
-		DidJS.Game.world.setBoundariesOnY(0, 600);
 		// var circle = DidJS.Game.create('circle').withProperties({
 		// 	position : new DidJS.Vector(100, 100),
 		// 	radius : 30,
@@ -41,8 +39,6 @@ require(['core/didjs'], function(DidJS) {
 			velY : 3
 		});
 
-		//var movement = new Movement();
-
 		var customKey =
 			{
 				name : 'left',
@@ -67,6 +63,8 @@ require(['core/didjs'], function(DidJS) {
 
 		var keyboard = DidJS.Game.createKeyboard().connectTo(player);
 
+		keyboard.setBoundariesOnX(0, 800);
+		keyboard.setBoundariesOnY(0, 600);
 		//square.keyboard.redefineKey(customKey);
 
 		// DidJS.Game.world.add(circle);

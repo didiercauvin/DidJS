@@ -1,6 +1,6 @@
 var DidJS = DidJS || {};
 
-define(['core/Game', 'core/world', 'core/Movement', 'core/Vector'], function(Game, World, Movement, Vector) {
+define(['core/Game', 'core/world', 'core/Vector'], function(Game, World, Vector) {
 	DidJS.Game = new Game();
 
 	return DidJS;
