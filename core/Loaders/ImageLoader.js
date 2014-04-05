@@ -24,7 +24,7 @@ define(['core/Utils/FileUtils'], function(FileUtils) {
 				images.push(myimage);
 				nbImagesProcessed++;
 				if (nbImagesProcessed === nbImages) {
-					callback(selfUrls, null);
+					callback(images, null);
 				}
 			}
 
@@ -33,7 +33,7 @@ define(['core/Utils/FileUtils'], function(FileUtils) {
 
 	ImageLoader.prototype.get = function(name) {
 		for(var image in images) {
-			var fileName = FileUtils.getFileNameWithExtension(images[image].src, 'Resources/');
+			var fileName = FileUtils.getFileNameWithExtension(images[image].src, this.path);
 			if (fileName === name + '.gif')
 				return images[image];	
 		}

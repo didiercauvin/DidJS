@@ -1,13 +1,11 @@
 var DidJS = DidJS || {};
 
-define(['core/Renderer', 'core/ShapeFactory', 'core/Keyboard'], function(Renderer, ShapeFactory, Keyboard) {
+define(['core/Renderer'], function(Renderer) {
 	DidJS.World = function(canvasName, width, height) {
 		var _renderer;
-		var _shapeFactory;
 		var _worldObjects = [];
 
 		_renderer = new Renderer(canvasName, width, height);
-		_shapeFactory = new ShapeFactory();
 
 		var gameLoop = function() {
 			_renderer.clearScene();
@@ -26,21 +24,10 @@ define(['core/Renderer', 'core/ShapeFactory', 'core/Keyboard'], function(Rendere
 			gameLoop();
 		}
 
-		this.create = function(shape) {
-			return {
-				withProperties : function(properties) {
-					return _shapeFactory.create(shape, properties);
-				}
-			}
-		}
-
 		this.add = function(gameObject) {
 			_worldObjects.push(gameObject);
 		}
 
-		this.createKeyboard = function(keys) {
-			return new Keyboard(keys);
-		}
 	}
 
 	return DidJS.World;

@@ -41,6 +41,9 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 		var createRectangle = function(properties) {
 			return {
 				position : properties.position,
+				image : properties.image,
+				sourceX : properties.sourceX,
+				sourceY : properties.sourceY,
 				width : properties.width,
 				height : properties.height,
 				velX : properties.velX,
