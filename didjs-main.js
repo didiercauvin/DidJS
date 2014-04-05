@@ -1,7 +1,7 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.onload(['bdd.gif', 'wcf.gif'], function() {
+				.load(['bdd.gif', 'wcf.gif'], function() {
 					gameInit();
 				});
 

@@ -9,7 +9,7 @@ define(['core/Loaders/ResourceLoader'], function(ResourceLoader) {
 				asPathFor : function(resourcesType) {
 					var self = this;
 					return {
-						onload : function(files, callback) {
+						load : function(files, callback) {
 							resourceLoader.getAll(files, path, resourcesType, function(resources, ex){
 								if (ex == null) {
 									var resourceType = {
