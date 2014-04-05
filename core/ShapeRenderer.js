@@ -8,7 +8,10 @@ define(function() {
                         ctx.arc(circle.position.X, circle.position.Y, circle.radius, 0, 2 * Math.PI, false);
                         ctx.closePath();
                         ctx.stroke();
-                        ctx.fill();
+                        
+                        if (circle.filled) {
+                            ctx.fill();    
+                        }
                 }
 	}
 
@@ -19,7 +22,11 @@ define(function() {
                 else {
                     ctx.beginPath();
                         ctx.rect(square.position.X, square.position.Y, square.side, square.side);
-                        ctx.fill();
+                        
+                        if (square.filled) {
+                            ctx.fill();    
+                        }
+
                         ctx.lineWidth = 1;
                         ctx.stroke();    
                 }
@@ -32,7 +39,11 @@ define(function() {
                 else {
                         ctx.beginPath();
                         ctx.rect(rectangle.position.X, rectangle.position.Y, rectangle.width, rectangle.height);
-                        ctx.fill();
+                        
+                        if (rectangle.filled) {
+                            ctx.fill();    
+                        }
+
                         ctx.lineWidth = 1;
                         ctx.stroke(); 
                 }

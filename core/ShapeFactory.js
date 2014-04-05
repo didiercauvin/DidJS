@@ -19,8 +19,13 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 		var createCircle = function(properties) {
 			return  {
 				position : properties.position,
+				image : properties.image,
+				sourceX : properties.sourceX,
+				sourceY : properties.sourceY,
 				radius : properties.radius,
 				velX : properties.velX,
+				velY : properties.velY,
+				filled : properties.filled,
 				draw : function(ctx) {
 					ShapeRenderer.drawCircle(this, ctx);
 				}
@@ -30,8 +35,13 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 		var createSquare = function(properties) {
 			return  {
 				position : properties.position,
+				image : properties.image,
+				sourceX : properties.sourceX,
+				sourceY : properties.sourceY,
 				side : properties.side,
 				velX : properties.velX,
+				velY : properties.velY,
+				filled : properties.filled,
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
 				}
@@ -47,6 +57,8 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				width : properties.width,
 				height : properties.height,
 				velX : properties.velX,
+				velY : properties.velY,
+				filled : properties.filled,
 				draw : function(ctx) {
 					ShapeRenderer.drawRectangle(this, ctx);
 				}

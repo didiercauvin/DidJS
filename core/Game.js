@@ -78,6 +78,7 @@ define(['core/Loaders/ResourceLoader',
 		this.createKeyboard = function(keys) {
 			return new Keyboard(keys);
 		}
+
 	}
 
 	return Game;

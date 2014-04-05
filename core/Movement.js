@@ -11,7 +11,7 @@ define(function() {
 				gObject.position.X += gObject.velX * direction;
 			},
 			toYAxis : function(direction) {
-				gObject.position.Y += direction;
+				gObject.position.Y += gObject.velY * direction;
 			}
 		}
 	}
