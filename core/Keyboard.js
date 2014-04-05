@@ -110,7 +110,9 @@ define(['core/Movement'], function(Movement) {
 
 	window.addEventListener("keyup", function(e) {
 		var index = keysStroke.indexOf(e.keyCode);
-		keysStroke.splice(index, 1);
+		if (index !== -1) {
+			keysStroke.splice(index, 1);
+		}
 	});
 
 	return Keyboard;
