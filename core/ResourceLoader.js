@@ -1,4 +1,4 @@
-define(['Loader/ImageLoader'], function(ImageLoader) {
+define(['core/Loaders/ImageLoader'], function(ImageLoader) {
 	function ResourceLoader() {
 		this.imagesUrl = ['Resources/circuit1_mask.gif', 'Resources/circuit1.gif', 'Resources/player1.gif'];
 		this.imgLoader = new ImageLoader(this.imagesUrl);
