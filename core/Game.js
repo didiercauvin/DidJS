@@ -1,7 +1,7 @@
-define(['core/didjs'], function(DidJS) {
-	function Game() {
+define(function() {
+	 function Game() {
 		var _resourcesTypes = [];
-		
+
 		this.world = null;
 		this.register = function(path) {
 			return {

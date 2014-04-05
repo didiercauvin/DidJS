@@ -1,9 +1,11 @@
+var DidJS = DidJS || {};
+
 define(function() {
-	function Movement() {
+	DidJS.Movement = function() {
 		
 	}
 
-	Movement.prototype.move = function(gObject) {
+	DidJS.Movement.prototype.move = function(gObject) {
 		return { 
 			toXAxis : function(direction) {
 				gObject.position.X += gObject.velX * direction;
@@ -15,6 +17,6 @@ define(function() {
 	}
 
 
-	return Movement;
+	return DidJS.Movement;
 
 })

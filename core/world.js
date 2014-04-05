@@ -1,5 +1,7 @@
+var DidJS = DidJS || {};
+
 define(['core/Renderer', 'core/ShapeFactory', 'core/Keyboard'], function(Renderer, ShapeFactory, Keyboard) {
-	function World(canvasName, width, height) {
+	DidJS.World = function(canvasName, width, height) {
 		var _renderer;
 		var _shapeFactory;
 		var _worldObjects = [];
@@ -41,5 +43,5 @@ define(['core/Renderer', 'core/ShapeFactory', 'core/Keyboard'], function(Rendere
 		}
 	}
 
-	return World;
+	return DidJS.World;
 })

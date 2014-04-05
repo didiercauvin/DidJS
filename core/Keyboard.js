@@ -1,6 +1,8 @@
+var DidJS = DidJS || {};
+
 define(['core/Movement'], function(Movement) {
 
-	var movement = new Movement();
+	var movement = new DidJS.Movement();
 
 	var defaultKeyboardKeys = [
 		{
@@ -100,11 +102,15 @@ define(['core/Movement'], function(Movement) {
 	}
 
 	window.addEventListener("keydown", function(e) {
-		keysStroke.push(e.keyCode);
+		var index = keysStroke.indexOf(e.keyCode);
+		if (index === -1) {
+			keysStroke.push(e.keyCode);
+		}
 	});
 
 	window.addEventListener("keyup", function(e) {
-		keysStroke.splice(0, e.keyCode);
+		var index = keysStroke.indexOf(e.keyCode);
+		keysStroke.splice(index, 1);
 	});
 
 	return Keyboard;
