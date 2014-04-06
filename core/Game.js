@@ -3,7 +3,7 @@ define(['core/Loaders/ResourceLoader',
 	    'core/Keyboard', 
 	    'core/Utils/FileUtils'], function(ResourceLoader, ShapeFactory, Keyboard, FileUtils) {
 	 function Game() {
-		var _resources = [];
+		var _resourcesInfo = [];
 		var resourceLoader = new ResourceLoader();
 		var _shapeFactory = new ShapeFactory();
 
@@ -23,7 +23,7 @@ define(['core/Loaders/ResourceLoader',
 								resourceLoader.get(fullFileName, resourcesType, function(resource, ex) {
 									if (ex == null) {
 										nbFileProcessed++;
-										resources.push({ id : name, resource : resource});
+										resources.push({ id : fileInfo.name, resource : resource});
 										if (nbFiles === nbFileProcessed) {
 											var resource = {
 												path : path,
@@ -31,7 +31,7 @@ define(['core/Loaders/ResourceLoader',
 												resourceType : resourcesType
 											};
 
-											_resources.push(resource);
+											_resourcesInfo.push(resource);
 											callback();
 										}
 									}
@@ -54,10 +54,9 @@ define(['core/Loaders/ResourceLoader',
 
 		var getResource = function(name) {
 			var res = null;
-			_resources.forEach(function(resource) {
-				resource.resources.forEach(function(r) {
-					var fileName = FileUtils.getFileNameWithExtension(r.resource.src, resource.path);
-					if (fileName === name + '.gif') {
+			_resourcesInfo.forEach(function(resourceInfo) {
+				resourceInfo.resources.forEach(function(r) {
+					if (r .id === name) {
 						res = r;
 						return;
 					}

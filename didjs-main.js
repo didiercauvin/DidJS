@@ -1,7 +1,7 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.load([{name : 'bdd',  file : 'bdd.gif'}, { name : 'mario_left', file : 'mario_run_left.gif'}], gameInit);
+				.load([{name : 'bdd',  file : 'bdd.gif'}, { name : 'mario', file : 'mario_run_left.gif'}], gameInit);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
@@ -31,7 +31,7 @@ require(['core/didjs'], function(DidJS) {
 		// 	filled : false
 		// });
 
-		var player = DidJS.Game.createGameObject('mario_run_left', 'rectangle').withProperties({
+		var player = DidJS.Game.createGameObject('mario', 'rectangle').withProperties({
 			position : new DidJS.Vector(400, 100),
 			width : 21,
 			height : 27,
