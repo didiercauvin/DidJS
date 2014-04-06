@@ -1,8 +1,9 @@
 var DidJS = DidJS || {};
 
 define(['core/Renderer',
-	    'core/Collider/Collider'], function(Renderer, Collider) {
+	    'core/Collider/Collider', 'core/AnimationManager'], function(Renderer, Collider, AnimationManager) {
 	DidJS.World = function(canvasName, width, height) {
+		var _animationManager = new AnimationManager();
 		var _renderer;
 		var _worldObjects = [];
 		var _collider = new Collider(_worldObjects);
@@ -17,6 +18,7 @@ define(['core/Renderer',
 					obj.keyboard.stroke();
 				}
 
+				_animationManager.animate(obj);
 				_renderer.draw(obj);
 			});
 
@@ -29,6 +31,10 @@ define(['core/Renderer',
 
 		this.add = function(gameObject) {
 			_worldObjects.push(gameObject);
+
+			if (gameObject.frames) {
+				_animationManager.add(gameObject);
+			}
 		}
 	}
 

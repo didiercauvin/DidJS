@@ -2,6 +2,10 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 	function ShapeFactory() {
 
 		this.create = function(shape, properties) {
+			if (!properties.resourceInfo) {
+				properties.resourceInfo = {id : shape};
+			}
+
 			if (shape === 'circle') {
 				return createCircle(properties);
 			}
@@ -18,6 +22,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createCircle = function(properties) {
 			return  {
+				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,
 				sourceX : properties.sourceX,
@@ -26,6 +31,10 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
+				frames : properties.frames,
+				fps : properties.fps,
+				currentDisplayedFrame : properties.currentDisplayedFrame,
+				moving : properties.moving,
 				draw : function(ctx) {
 					ShapeRenderer.drawCircle(this, ctx);
 				}
@@ -34,6 +43,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createSquare = function(properties) {
 			return  {
+				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,
 				sourceX : properties.sourceX,
@@ -42,6 +52,10 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
+				frames : properties.frames,
+				fps : properties.fps,
+				currentDisplayedFrame : properties.currentDisplayedFrame,
+				moving : properties.moving,
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
 				}
@@ -50,6 +64,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createRectangle = function(properties) {
 			return {
+				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,
 				sourceX : properties.sourceX,
@@ -59,6 +74,10 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
+				frames : properties.frames,
+				fps : properties.fps,
+				currentDisplayedFrame : properties.currentDisplayedFrame,
+				moving : properties.moving,
 				draw : function(ctx) {
 					ShapeRenderer.drawRectangle(this, ctx);
 				}

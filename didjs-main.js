@@ -39,7 +39,6 @@ require(['core/didjs'], function(DidJS) {
 			velY : 3,
 			frames : 3,
 			fps : 4,
-			currentDisplayedFrame : 0,
 			moving : true
 		});
 
