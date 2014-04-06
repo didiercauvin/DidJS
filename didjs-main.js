@@ -1,7 +1,10 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.load([{name : 'luigi',  file : 'luigi.gif'}, { name : 'mario', file : 'mario_complete.gif'}], gameInit);
+				.load([
+					{ name : 'luigi',  file : 'luigi.gif' }, 
+					{ name : 'mario', file : 'mario_complete.gif' }
+					], gameInit);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
@@ -74,10 +77,11 @@ require(['core/didjs'], function(DidJS) {
 		keyboard.setBoundariesOnX(0, 800);
 		keyboard.setBoundariesOnY(0, 600);
 
-		var animationIdlePlayer = {key : "idle", frameStart : 8, frameEnd : 10, fps: 3, active: true};
+		var animationIdlePlayer = {key : "idle", frameStart : 7, frameEnd : 7, fps: 1, active: true};
 		var animationWalkLeft = { key : "walkleft", frameStart : 0, frameEnd : 2, fps : 4, active: false };
 		var animationWalkRight = {key : "walkright", frameStart : 3, frameEnd : 5, fps : 4, active: false };
-		var animationJump = { key : "jump", frameStart : 6, frameEnd : 7, fps : 2, active: false };
+		var animationJump = { key : "jump", frameStart : 8, frameEnd : 8, fps : 1, active: false };
+		var animationDown = { key : "down", frameStart : 6, frameEnd : 6, fps : 1, active : false };
 
 		var animationIdleLuigi = {key : "idle", frameStart : 0, frameEnd : 2, fps : 3, active : true };
 
@@ -88,6 +92,7 @@ require(['core/didjs'], function(DidJS) {
 		keyboard.bindKey("left").to(animationWalkLeft);
 		keyboard.bindKey("right").to(animationWalkRight);
 		keyboard.bindKey("up").to(animationJump);
+		keyboard.bindKey("down").to(animationDown);
 
 		//square.keyboard.redefineKey(customKey);
 
@@ -95,7 +100,7 @@ require(['core/didjs'], function(DidJS) {
 		// DidJS.Game.world.add(square);
 		// DidJS.Game.world.add(rectangle);
 		DidJS.Game.world.add(player);
-		DidJS.Game.world.add(luigi);
+		//DidJS.Game.world.add(luigi);
 
 
 		DidJS.Game.world.render();
