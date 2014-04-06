@@ -1,9 +1,8 @@
 var DidJS = DidJS || {};
 
 define(['core/Renderer',
-	    'core/Collider/Collider', 'core/AnimationManager'], function(Renderer, Collider, AnimationManager) {
+	    'core/Collider/Collider'], function(Renderer, Collider) {
 	DidJS.World = function(canvasName, width, height) {
-		var _animationManager = new AnimationManager();
 		var _renderer;
 		var _worldObjects = [];
 		var _collider = new Collider(_worldObjects);
@@ -13,13 +12,20 @@ define(['core/Renderer',
 		var gameLoop = function() {
 			_renderer.clearScene();
 			_worldObjects.forEach(function(obj) {
-
-				if (!!obj.keyboard) {
+				var hasKeyboard = !!obj.keyboard;
+				if (hasKeyboard) {
 					obj.keyboard.stroke();
 				}
 
-				_animationManager.animate(obj);
+				DidJS.AnimationManager.animate(obj);
 				_renderer.draw(obj);
+
+				obj.animations.forEach(function(animation) {
+					animation.active = false;
+					if (!animation.bindkey) {
+						animation.active = true;
+					}
+				});
 			});
 
 			requestAnimationFrame(gameLoop);
@@ -31,10 +37,6 @@ define(['core/Renderer',
 
 		this.add = function(gameObject) {
 			_worldObjects.push(gameObject);
-
-			if (gameObject.frames) {
-				_animationManager.add(gameObject);
-			}
 		}
 	}
 

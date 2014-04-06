@@ -1,7 +1,7 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.load([{name : 'luigi',  file : 'luigi.gif'}, { name : 'mario', file : 'mario_run_left.gif'}], gameInit);
+				.load([{name : 'luigi',  file : 'luigi.gif'}, { name : 'mario', file : 'mario_complete.gif'}], gameInit);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
@@ -36,10 +36,7 @@ require(['core/didjs'], function(DidJS) {
 			width : 21,
 			height : 27,
 			velX : 3,
-			velY : 3,
-			frames : 3,
-			fps : 4,
-			animated : true
+			velY : 3
 		});
 
 		var luigi = DidJS.Game.createGameObject('luigi', 'rectangle').withProperties( {
@@ -47,10 +44,7 @@ require(['core/didjs'], function(DidJS) {
 			width : 36,
 			height : 37,
 			velX : 3,
-			velY : 3,
-			frames : 3,
-			fps : 3,
-			animated : true
+			velY : 3
 		})
 
 		var customKey =
@@ -79,6 +73,22 @@ require(['core/didjs'], function(DidJS) {
 
 		keyboard.setBoundariesOnX(0, 800);
 		keyboard.setBoundariesOnY(0, 600);
+
+		var animationIdlePlayer = {key : "idle", frameStart : 8, frameEnd : 10, fps: 3, active: true};
+		var animationWalkLeft = { key : "walkleft", frameStart : 0, frameEnd : 2, fps : 4, active: false };
+		var animationWalkRight = {key : "walkright", frameStart : 3, frameEnd : 5, fps : 4, active: false };
+		var animationJump = { key : "jump", frameStart : 6, frameEnd : 7, fps : 2, active: false };
+
+		var animationIdleLuigi = {key : "idle", frameStart : 0, frameEnd : 2, fps : 3, active : true };
+
+	
+		DidJS.Game.setAnimation(animationIdlePlayer).to(player);
+		DidJS.Game.setAnimation(animationIdleLuigi).to(luigi);
+
+		keyboard.bindKey("left").to(animationWalkLeft);
+		keyboard.bindKey("right").to(animationWalkRight);
+		keyboard.bindKey("up").to(animationJump);
+
 		//square.keyboard.redefineKey(customKey);
 
 		// DidJS.Game.world.add(circle);

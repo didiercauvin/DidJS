@@ -6,6 +6,10 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				properties.resourceInfo = {id : shape};
 			}
 
+			if (!properties.animations){
+				properties.animations = [];
+			}
+
 			if (shape === 'circle') {
 				return createCircle(properties);
 			}
@@ -31,9 +35,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
-				frames : properties.frames,
-				fps : properties.fps,
-				currentDisplayedFrame : properties.currentDisplayedFrame,
+				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
 				draw : function(ctx) {
@@ -53,9 +55,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
-				frames : properties.frames,
-				fps : properties.fps,
-				currentDisplayedFrame : properties.currentDisplayedFrame,
+				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
 				draw : function(ctx) {
@@ -76,9 +76,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
-				frames : properties.frames,
-				fps : properties.fps,
-				currentDisplayedFrame : properties.currentDisplayedFrame,
+				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
 				draw : function(ctx) {

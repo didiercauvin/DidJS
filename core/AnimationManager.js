@@ -3,46 +3,50 @@ define(function() {
 		this._animatedObjects = [];
 	}
 
-	AnimationManager.prototype.add = function(gObject) {
-		var animatedObject = {
-			baseObject : gObject,
-			timeBetweenFrames : 1 / gObject.fps,
+	AnimationManager.prototype.add = function(gObject, animation) {
+		if (!this.isAnimatedObject(gObject)) {
+			this._animatedObjects[gObject.id] = [];
+		}
+
+		var animationObject = {
+			key : animation.key,
+			timeBetweenFrames : 1 / animation.fps,
 			timeSinceLastFrame : new Date().getTime(),
-			currentDisplayedFrame : 0,
+			currentDisplayedFrame : animation.frameStart,
+			totalFrames : (animation.frameEnd - animation.frameStart) + 1,
 			setCurrentDisplayedFrame : function() {
 				++this.currentDisplayedFrame;
-				if (this.currentDisplayedFrame > this.baseObject.frames - 1) {
-					this.currentDisplayedFrame = 0;
+				if (this.currentDisplayedFrame > animation.frameEnd) {
+					this.currentDisplayedFrame = animation.frameStart;
 				}
 			}
 		}
 
-		this._animatedObjects.push(animatedObject);
+		this._animatedObjects[gObject.id].push(animationObject);
 	}
 
 	AnimationManager.prototype.isAnimatedObject = function(gObject) {
 		var isAnimated = false;
-		this._animatedObjects.forEach(function(aObj) {
-			if (aObj.id === gObject.id) {
-				isAnimated = true;
-				return;
-			} 
-		})
-
-		return isAnimated;
+		var animations = this._animatedObjects[gObject.id];
+		return !!animations;
 	}
 
 
 	AnimationManager.prototype.animate = function(gObject) {
 
-		var aObject = null; 
+		var aObject = this._animatedObjects[gObject.id]; 
+		var currentAnimation = null;
+		if (aObject) {
+			aObject.forEach(function(a) {
+				gObject.animations.forEach(function(gObjectAnimation) {
+					if (gObjectAnimation.active && a.key === gObjectAnimation.key) {
+						currentAnimation = a;
+						return;
+					}
+				})
+			})
 
-		this._animatedObjects.forEach(function(o) {
-			if (o.baseObject.id === gObject.id) {
-				aObject = o;
-				return;
-			}
-		})
+		}
 
 		var timeExhausted = function(time1, time2) {
 			return time1 >= time2;
@@ -52,24 +56,21 @@ define(function() {
 			return new Date().getTime();
 		}
 
-		if (aObject) {
-			aObject.baseObject.sourceX = 0;
-	        aObject.baseObject.width = aObject.baseObject.image.width / aObject.baseObject.frames;
-			if (aObject.baseObject.moving) {
-	            aObject.baseObject.sourceX = aObject.baseObject.width * aObject.currentDisplayedFrame;
-			}
+		if (currentAnimation) {
+			gObject.sourceX = 0;
+	        //gObject.width = gObject.image.width / currentAnimation.totalFrames;
 
-			if (aObject.baseObject.animated) {
-	            aObject.baseObject.sourceX = aObject.baseObject.width * aObject.currentDisplayedFrame;
-			}
+			//if (aObject.baseObject.animated) {
+	        gObject.sourceX = gObject.width * currentAnimation.currentDisplayedFrame;
+			//}
 
 			var timeForThisFrame = getCurrentTime();
-	        var timeDiff = (timeForThisFrame - aObject.timeSinceLastFrame) / 1000;
+	        var timeDiff = (timeForThisFrame - currentAnimation.timeSinceLastFrame) / 1000;
 	        
-	        if (timeExhausted(timeDiff, aObject.timeBetweenFrames))
+	        if (timeExhausted(timeDiff, currentAnimation.timeBetweenFrames))
 	        {
-	           aObject.setCurrentDisplayedFrame();
-	           aObject.timeSinceLastFrame = getCurrentTime();
+	           currentAnimation.setCurrentDisplayedFrame();
+	           currentAnimation.timeSinceLastFrame = getCurrentTime();
 	        }
 		}
 	}

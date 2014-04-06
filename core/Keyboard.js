@@ -3,38 +3,58 @@ var DidJS = DidJS || {};
 define(function() {
 
 	var keysStroke = [];
+	var _bindedAnimations = [];
 
 	function Keyboard(keys) {
 		var _boundaryOnXMin, _boundaryOnXMax, _boundaryOnYMin, _boundaryOnYMax;
 		var self = this;
+
+		var setAnimationAsActiveFor = function(key) {
+			
+			self.parent.animations.forEach(function(animation) {
+				animation.active = false;
+				if (animation.bindkey === key) {
+					animation.active = true;
+				}
+				
+			});
+		}
 
 		var defaultKeyboardKeys = [
 			{
 				name : 'left',
 				key : 37,
 				strokeMethod: function(gObject) {
-					self.move(gObject).toXAxis(-1);
+					gObject.animated = true;
+					setAnimationAsActiveFor('left');
+					self.move().toXAxis(-1);
 				}
 			},
 			{
 				name : 'up',
 				key : 38,
 				strokeMethod: function(gObject) {
-					self.move(gObject).toYAxis(-1);
+					gObject.animated = true;
+					setAnimationAsActiveFor('up');
+					self.move().toYAxis(-1);
 				}
 			},
 			{
 				name : 'right',
 				key : 39,
 				strokeMethod: function(gObject) {
-					self.move(gObject).toXAxis(1);
+					gObject.animated = true;
+					setAnimationAsActiveFor('right');
+					self.move().toXAxis(1);
 				}
 			},
 			{
 				name : 'down',
 				key : 40,
 				strokeMethod: function(gObject) {
-					self.move(gObject).toYAxis(1);
+					gObject.animated = true;
+					setAnimationAsActiveFor('down');
+					self.move().toYAxis(1);
 				}
 			}
 		];
@@ -137,7 +157,8 @@ define(function() {
 			_boundaryOnYMax = max;
 		}
 
-		this.move = function(gObject) {
+		this.move = function() {
+			var gObject = this.parent;
 			return { 
 				toXAxis : function(direction) {
 					var x = gObject.position.X + (gObject.velX * direction);
@@ -167,6 +188,23 @@ define(function() {
 						gObject.position.Y = y;
 					}
 					
+				}
+			}
+		}
+
+		this.bindKey = function(bindkey) {
+			var self = this;
+			return {
+				to : function(animation) {
+
+					if (!self.parent.animations) {
+						self.parent.animations = [];
+					}
+
+					animation.bindkey = bindkey;
+					self.parent.animations.push(animation);
+					//_bindedAnimations.push({key : bindkey, animation : animation});
+					DidJS.AnimationManager.add(self.parent, animation);
 				}
 			}
 		}

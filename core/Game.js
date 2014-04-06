@@ -88,6 +88,19 @@ define(['core/Loaders/ResourceLoader',
 			return new Keyboard(keys);
 		}
 
+		this.setAnimation = function(animation) {
+			var self = this;
+			return {
+				to : function(gObject) {
+					if (!gObject.animations) {
+						gObject.animations = [];
+					}
+					animation.binded = false;
+					gObject.animations.push(animation);
+					DidJS.AnimationManager.add(gObject, animation);
+				}
+			}
+		}
 	}
 
 	return Game;
