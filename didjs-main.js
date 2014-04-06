@@ -1,7 +1,7 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.load([{name : 'bdd',  file : 'bdd.gif'}, { name : 'mario', file : 'mario_run_left.gif'}], gameInit);
+				.load([{name : 'luigi',  file : 'luigi.gif'}, { name : 'mario', file : 'mario_run_left.gif'}], gameInit);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
@@ -39,8 +39,19 @@ require(['core/didjs'], function(DidJS) {
 			velY : 3,
 			frames : 3,
 			fps : 4,
-			moving : true
+			animated : true
 		});
+
+		var luigi = DidJS.Game.createGameObject('luigi', 'rectangle').withProperties( {
+			position : new DidJS.Vector(400, 400),
+			width : 36,
+			height : 37,
+			velX : 3,
+			velY : 3,
+			frames : 3,
+			fps : 3,
+			animated : true
+		})
 
 		var customKey =
 			{
@@ -74,6 +85,7 @@ require(['core/didjs'], function(DidJS) {
 		// DidJS.Game.world.add(square);
 		// DidJS.Game.world.add(rectangle);
 		DidJS.Game.world.add(player);
+		DidJS.Game.world.add(luigi);
 
 
 		DidJS.Game.world.render();

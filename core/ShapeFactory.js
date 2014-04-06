@@ -35,6 +35,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				fps : properties.fps,
 				currentDisplayedFrame : properties.currentDisplayedFrame,
 				moving : properties.moving,
+				animated : properties.animated,
 				draw : function(ctx) {
 					ShapeRenderer.drawCircle(this, ctx);
 				}
@@ -56,6 +57,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				fps : properties.fps,
 				currentDisplayedFrame : properties.currentDisplayedFrame,
 				moving : properties.moving,
+				animated : properties.animated,
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
 				}
@@ -78,6 +80,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				fps : properties.fps,
 				currentDisplayedFrame : properties.currentDisplayedFrame,
 				moving : properties.moving,
+				animated : properties.animated,
 				draw : function(ctx) {
 					ShapeRenderer.drawRectangle(this, ctx);
 				}

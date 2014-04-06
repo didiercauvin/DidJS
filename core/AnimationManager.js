@@ -40,6 +40,7 @@ define(function() {
 		this._animatedObjects.forEach(function(o) {
 			if (o.baseObject.id === gObject.id) {
 				aObject = o;
+				return;
 			}
 		})
 
@@ -58,7 +59,7 @@ define(function() {
 	            aObject.baseObject.sourceX = aObject.baseObject.width * aObject.currentDisplayedFrame;
 			}
 
-			if (aObject.baseObject.moving) {
+			if (aObject.baseObject.animated) {
 	            aObject.baseObject.sourceX = aObject.baseObject.width * aObject.currentDisplayedFrame;
 			}
 
