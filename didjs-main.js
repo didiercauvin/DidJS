@@ -1,7 +1,7 @@
 require(['core/didjs'], function(DidJS) {
 	
 	var registeredPath = DidJS.Game.register('Resources/').asPathFor('Images')
-				.load(['bdd.gif', 'wcf.gif'], gameInit);
+				.load([{name : 'bdd',  file : 'bdd.gif'}, { name : 'mario_left', file : 'mario_run_left.gif'}], gameInit);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
@@ -31,12 +31,16 @@ require(['core/didjs'], function(DidJS) {
 		// 	filled : false
 		// });
 
-		var player = DidJS.Game.createGameObject('bdd', 'rectangle').withProperties({
+		var player = DidJS.Game.createGameObject('mario_run_left', 'rectangle').withProperties({
 			position : new DidJS.Vector(400, 100),
-			width : 44,
-			height : 17,
+			width : 21,
+			height : 27,
 			velX : 3,
-			velY : 3
+			velY : 3,
+			frames : 3,
+			fps : 4,
+			currentDisplayedFrame : 0,
+			moving : true
 		});
 
 		var customKey =

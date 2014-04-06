@@ -1,51 +1,51 @@
 define(function() {
 	function drawCircle(circle, ctx) {
                 if (circle.image) {
-                        draw(circle, ctx);
+                    draw(circle, ctx);
                 }
                 else {
-        		ctx.beginPath();
-                        ctx.arc(circle.position.X, circle.position.Y, circle.radius, 0, 2 * Math.PI, false);
-                        ctx.closePath();
-                        ctx.stroke();
-                        
-                        if (circle.filled) {
-                            ctx.fill();    
-                        }
+    		        ctx.beginPath();
+                    ctx.arc(circle.position.X, circle.position.Y, circle.radius, 0, 2 * Math.PI, false);
+                    ctx.closePath();
+                    ctx.stroke();
+                    
+                    if (circle.filled) {
+                        ctx.fill();    
+                    }
                 }
 	}
 
 	function drawSquare(square, ctx) {
                 if (square.image) {
-                        draw(square, ctx);
+                    draw(square, ctx);
                 }
                 else {
                     ctx.beginPath();
-                        ctx.rect(square.position.X, square.position.Y, square.side, square.side);
-                        
-                        if (square.filled) {
-                            ctx.fill();    
-                        }
+                    ctx.rect(square.position.X, square.position.Y, square.side, square.side);
+                    
+                    if (square.filled) {
+                        ctx.fill();    
+                    }
 
-                        ctx.lineWidth = 1;
-                        ctx.stroke();    
+                    ctx.lineWidth = 1;
+                    ctx.stroke();    
                 }
 	}
 
         function drawRectangle(rectangle, ctx) {
                 if (rectangle.image) {
-                        draw(rectangle, ctx);
+                    draw(rectangle, ctx);
                 }
                 else {
-                        ctx.beginPath();
-                        ctx.rect(rectangle.position.X, rectangle.position.Y, rectangle.width, rectangle.height);
-                        
-                        if (rectangle.filled) {
-                            ctx.fill();    
-                        }
+                    ctx.beginPath();
+                    ctx.rect(rectangle.position.X, rectangle.position.Y, rectangle.width, rectangle.height);
+                    
+                    if (rectangle.filled) {
+                        ctx.fill();    
+                    }
 
-                        ctx.lineWidth = 1;
-                        ctx.stroke(); 
+                    ctx.lineWidth = 1;
+                    ctx.stroke(); 
                 }
         }
 
