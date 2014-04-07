@@ -143,8 +143,13 @@ define(function() {
 			return this;
 		}
 
-		this.redefineKey = function(keyToMap) {
-			return this.redefineKeys([keyToMap]);
+		this.redefineKey = function(keyToMap, behaviour) {
+			//return this.redefineKeys([keyToMap]);
+			this._keys.forEach(function(key) {
+				if (key.name === keyToMap) {
+					key.strokeMethod = behaviour;
+				}
+			})
 		}
 
 		this.setBoundariesOnX = function(min, max) {
@@ -196,15 +201,7 @@ define(function() {
 			var self = this;
 			return {
 				to : function(animation) {
-
-					if (!self.parent.animations) {
-						self.parent.animations = [];
-					}
-
 					animation.bindkey = bindkey;
-					self.parent.animations.push(animation);
-					//_bindedAnimations.push({key : bindkey, animation : animation});
-					DidJS.AnimationManager.add(self.parent, animation);
 				}
 			}
 		}

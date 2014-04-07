@@ -77,6 +77,12 @@ require(['core/didjs'], function(DidJS) {
 		keyboard.setBoundariesOnX(0, 800);
 		keyboard.setBoundariesOnY(0, 600);
 
+
+		// keyboard.redefineKey('left', function() {
+		// 	keyboard.parent.animated = true;
+		// 	keyboard.move().toXAxis(1);
+		// })
+
 		var animationIdlePlayer = {key : "idle", frameStart : 7, frameEnd : 7, fps: 1, active: true};
 		var animationWalkLeft = { key : "walkleft", frameStart : 0, frameEnd : 2, fps : 4, active: false };
 		var animationWalkRight = {key : "walkright", frameStart : 3, frameEnd : 5, fps : 4, active: false };
@@ -86,8 +92,18 @@ require(['core/didjs'], function(DidJS) {
 		var animationIdleLuigi = {key : "idle", frameStart : 0, frameEnd : 2, fps : 3, active : true };
 
 	
-		DidJS.Game.setAnimation(animationIdlePlayer).to(player);
-		DidJS.Game.setAnimation(animationIdleLuigi).to(luigi);
+		DidJS.Game
+		.setAnimation(
+			[
+				animationIdlePlayer, 
+				animationWalkLeft,
+				animationWalkRight,
+				animationJump,
+				animationDown
+			])
+		.to(player);
+
+		DidJS.Game.setAnimation([animationIdleLuigi]).to(luigi);
 
 		keyboard.bindKey("left").to(animationWalkLeft);
 		keyboard.bindKey("right").to(animationWalkRight);
