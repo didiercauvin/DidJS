@@ -88,7 +88,7 @@ define(['core/Loaders/ResourceLoader',
 			return new Keyboard(keys);
 		}
 
-		this.setAnimation = function(animations) {
+		this.initializeAnimations = function(animations) {
 			var self = this;
 			return {
 				to : function(gObject) {
@@ -103,6 +103,20 @@ define(['core/Loaders/ResourceLoader',
 					})
 
 					
+				}
+			}
+		}
+
+		this.setAnimation = function(animationName, animate) {
+			var self = this;
+			return {
+				to : function(gObject) {
+					gObject.animations.forEach(function(animation) {
+						if (animation.key === animationName) {
+							gObject.animation = animation;
+							gObject.animation.active = animate;
+						}
+					})
 				}
 			}
 		}

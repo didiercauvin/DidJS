@@ -38,12 +38,10 @@ define(function() {
 		var currentAnimation = null;
 		if (aObject) {
 			aObject.forEach(function(a) {
-				gObject.animations.forEach(function(gObjectAnimation) {
-					if (gObjectAnimation.active && a.key === gObjectAnimation.key) {
-						currentAnimation = a;
-						return;
-					}
-				})
+				if (gObject.animation.active && a.key === gObject.animation.key) {
+					currentAnimation = a;
+					return;
+				}
 			})
 
 		}

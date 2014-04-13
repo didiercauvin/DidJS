@@ -6,27 +6,14 @@ define(function() {
 	var _bindedAnimations = [];
 
 	function Keyboard(keys) {
-		var _boundaryOnXMin, _boundaryOnXMax, _boundaryOnYMin, _boundaryOnYMax;
 		var self = this;
 
-		var setAnimationAsActiveFor = function(key) {
-			
-			self.parent.animations.forEach(function(animation) {
-				animation.active = false;
-				if (animation.bindkey === key) {
-					animation.active = true;
-				}
-				
-			});
-		}
 
 		var defaultKeyboardKeys = [
 			{
 				name : 'left',
 				key : 37,
 				strokeMethod: function(gObject) {
-					gObject.animated = true;
-					setAnimationAsActiveFor('left');
 					self.move().toXAxis(-1);
 				}
 			},
@@ -34,8 +21,6 @@ define(function() {
 				name : 'up',
 				key : 38,
 				strokeMethod: function(gObject) {
-					gObject.animated = true;
-					setAnimationAsActiveFor('up');
 					self.move().toYAxis(-1);
 				}
 			},
@@ -43,8 +28,6 @@ define(function() {
 				name : 'right',
 				key : 39,
 				strokeMethod: function(gObject) {
-					gObject.animated = true;
-					setAnimationAsActiveFor('right');
 					self.move().toXAxis(1);
 				}
 			},
@@ -52,39 +35,10 @@ define(function() {
 				name : 'down',
 				key : 40,
 				strokeMethod: function(gObject) {
-					gObject.animated = true;
-					setAnimationAsActiveFor('down');
 					self.move().toYAxis(1);
 				}
 			}
 		];
-
-		var getBoundariesStatusFor = function(x, y, width, height) {
-			var whichBoundary = {
-				onXMin : false,
-				onYMin : false,
-				onXMax : false,
-				onYMax : false
-			}
-
-			if (x < _boundaryOnXMin) {
-				whichBoundary.onXMin = true;
-			}
-
-			if (x + width > _boundaryOnXMax) {
-				whichBoundary.onXMax = true;
-			}
-
-			if (y < _boundaryOnYMin) {
-				whichBoundary.onYMin = true;
-			}
-
-			if (y + height > _boundaryOnYMax) {
-				whichBoundary.onYMax = true;
-			}
-
-			return whichBoundary;
-		}
 
 		this._keys = keys;
 
@@ -152,28 +106,20 @@ define(function() {
 			})
 		}
 
-		this.setBoundariesOnX = function(min, max) {
-			_boundaryOnXMin = min;
-			_boundaryOnXMax = max;
-		}
-
-		this.setBoundariesOnY = function(min, max) {
-			_boundaryOnYMin = min;
-			_boundaryOnYMax = max;
-		}
+		
 
 		this.move = function() {
 			var gObject = this.parent;
 			return { 
 				toXAxis : function(direction) {
 					var x = gObject.position.X + (gObject.velX * direction);
-					var boundariesStatus = getBoundariesStatusFor(x, gObject.position.Y, gObject.width, gObject.height);
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(x, gObject.position.Y, gObject.width, gObject.height);
 
 					if (boundariesStatus.onXMin) {
-						gObject.position.X = _boundaryOnXMin;
+						gObject.position.X = DidJS.Game.world.getBoundaryOnXMin();
 					}
 					else if (boundariesStatus.onXMax) {
-						gObject.position.X = _boundaryOnXMax - gObject.width; 
+						gObject.position.X = DidJS.Game.world.getBoundaryOnXMax() - gObject.width; 
 					}
 					else {
 						gObject.position.X = x;
@@ -181,13 +127,13 @@ define(function() {
 				},
 				toYAxis : function(direction) {
 					var y = gObject.position.Y + gObject.velY * direction;
-					var boundariesStatus = getBoundariesStatusFor(gObject.position.X, y, gObject.width, gObject.height);
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject.position.X, y, gObject.width, gObject.height);
 
 					if (boundariesStatus.onYMin) {
-						gObject.position.Y = _boundaryOnYMin;
+						gObject.position.Y = DidJS.Game.world.getBoundaryOnYMin();
 					}
 					else if (boundariesStatus.onYMax) {
-						gObject.position.Y = _boundaryOnYMax - gObject.height; 
+						gObject.position.Y = DidJS.Game.world.getBoundaryOnYMax() - gObject.height; 
 					}
 					else {
 						gObject.position.Y = y;
@@ -205,21 +151,41 @@ define(function() {
 				}
 			}
 		}
+
+		window.addEventListener("keydown", function(e) {
+			var index = keysStroke.indexOf(e.keyCode);
+			if (index === -1) {
+				keysStroke.push(e.keyCode);
+			}
+
+			if (self.onKeyDown) {
+				self._keys.forEach(function(keyProperties) {
+					if (e.keyCode == keyProperties.key) {
+						self.onKeyDown(keyProperties);
+						
+					}
+				});
+			}
+		});
+
+		window.addEventListener("keyup", function(e) {
+			var index = keysStroke.indexOf(e.keyCode);
+			if (index !== -1) {
+				keysStroke.splice(index, 1);
+			}
+
+			if (self.onKeyUp) {
+				self._keys.forEach(function(keyProperties) {
+					if (e.keyCode == keyProperties.key) {
+						self.onKeyUp(keyProperties);
+						
+					}
+				});
+			}
+		});
 	}
 
-	window.addEventListener("keydown", function(e) {
-		var index = keysStroke.indexOf(e.keyCode);
-		if (index === -1) {
-			keysStroke.push(e.keyCode);
-		}
-	});
 
-	window.addEventListener("keyup", function(e) {
-		var index = keysStroke.indexOf(e.keyCode);
-		if (index !== -1) {
-			keysStroke.splice(index, 1);
-		}
-	});
 
 	return Keyboard;
 })
