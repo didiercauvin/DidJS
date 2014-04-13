@@ -11,7 +11,7 @@ define(['core/Renderer',
 
 		_renderer = new Renderer(canvasName, width, height);
 
-		this.getBoundariesStatusFor = function(x, y, width, height) {
+		this.getBoundariesStatusFor = function(x, y, width, height, posXForCollision, posYForCollision) {
 			var whichBoundary = {
 				onXMin : false,
 				onYMin : false,
@@ -19,7 +19,7 @@ define(['core/Renderer',
 				onYMax : false
 			}
 
-			if (x < _boundaryOnXMin) {
+			if (x - posXForCollision < _boundaryOnXMin) {
 				whichBoundary.onXMin = true;
 			}
 
@@ -27,7 +27,7 @@ define(['core/Renderer',
 				whichBoundary.onXMax = true;
 			}
 
-			if (y < _boundaryOnYMin) {
+			if (y - posYForCollision < _boundaryOnYMin) {
 				whichBoundary.onYMin = true;
 			}
 
@@ -49,7 +49,7 @@ define(['core/Renderer',
 					obj.keyboard.stroke();
 				}
 
-				var boundaryStatus = self.getBoundariesStatusFor(obj.position.X, obj.position.Y, obj.width, obj.height);
+				var boundaryStatus = self.getBoundariesStatusFor(obj.position.X, obj.position.Y, obj.width, obj.height, obj.posXForCollision, obj.posYForCollision);
 				if (boundaryStatus.onXMin || boundaryStatus.onXMax || boundaryStatus.onYMin || boundaryStatus.onYMax) {
 					if (obj.onBoundaryCollision) {
 						obj.onBoundaryCollision(boundaryStatus);
@@ -58,7 +58,7 @@ define(['core/Renderer',
 
 				 DidJS.AnimationManager.animate(obj);
 				 _renderer.draw(obj);
-				 
+
 			});
 
 			requestAnimationFrame(gameLoop);

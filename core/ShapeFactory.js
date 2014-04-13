@@ -32,12 +32,17 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				sourceX : properties.sourceX,
 				sourceY : properties.sourceY,
 				radius : properties.radius,
+				posXForCollision : properties.radius,
+				posYForCollision : properties.radius,
+				width : properties.radius,
+				height : properties.radius,
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
 				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
+				fillStyle : properties.fillStyle,
 				draw : function(ctx) {
 					ShapeRenderer.drawCircle(this, ctx);
 				}
@@ -52,12 +57,15 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				sourceX : properties.sourceX,
 				sourceY : properties.sourceY,
 				side : properties.side,
+				posXForCollision : 0,
+				posYForCollision : 0,
 				velX : properties.velX,
 				velY : properties.velY,
 				filled : properties.filled,
 				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
+				fillStyle : properties.fillStyle,
 				draw : function(ctx) {
 					ShapeRenderer.drawSquare(this, ctx);
 				}
@@ -71,6 +79,8 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				image : properties.resourceInfo.resource,
 				sourceX : properties.sourceX,
 				sourceY : properties.sourceY,
+				posXForCollision : 0,
+				posYForCollision : 0,
 				width : properties.width,
 				height : properties.height,
 				velX : properties.velX,
@@ -79,6 +89,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 				animations : properties.animations,
 				moving : properties.moving,
 				animated : properties.animated,
+				fillStyle : properties.fillStyle,
 				draw : function(ctx) {
 					ShapeRenderer.drawRectangle(this, ctx);
 				}

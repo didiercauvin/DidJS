@@ -8,7 +8,11 @@ define(function() {
                     ctx.arc(circle.position.X, circle.position.Y, circle.radius, 0, 2 * Math.PI, false);
                     ctx.closePath();
                     ctx.stroke();
-                    
+
+                    if (circle.fillStyle) {
+                        ctx.fillStyle = circle.fillStyle;
+                    }
+
                     if (circle.filled) {
                         ctx.fill();    
                     }
@@ -23,6 +27,10 @@ define(function() {
                     ctx.beginPath();
                     ctx.rect(square.position.X, square.position.Y, square.side, square.side);
                     
+                    if (square.fillStyle) {
+                        ctx.fillStyle = square.fillStyle;
+                    }
+
                     if (square.filled) {
                         ctx.fill();    
                     }
@@ -40,6 +48,10 @@ define(function() {
                     ctx.beginPath();
                     ctx.rect(rectangle.position.X, rectangle.position.Y, rectangle.width, rectangle.height);
                     
+                    if (rectangle.fillStyle) {
+                        ctx.fillStyle = rectangle.fillStyle;
+                    }
+
                     if (rectangle.filled) {
                         ctx.fill();    
                     }

@@ -113,7 +113,7 @@ define(function() {
 			return { 
 				toXAxis : function(direction) {
 					var x = gObject.position.X + (gObject.velX * direction);
-					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(x, gObject.position.Y, gObject.width, gObject.height);
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(x, gObject.position.Y, gObject.width, gObject.height, gObject.posXForCollision, gObject.posYForCollision);
 
 					if (boundariesStatus.onXMin) {
 						gObject.position.X = DidJS.Game.world.getBoundaryOnXMin();
@@ -127,7 +127,7 @@ define(function() {
 				},
 				toYAxis : function(direction) {
 					var y = gObject.position.Y + gObject.velY * direction;
-					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject.position.X, y, gObject.width, gObject.height);
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject.position.X, y, gObject.width, gObject.height, gObject.posXForCollision, gObject.posYForCollision);
 
 					if (boundariesStatus.onYMin) {
 						gObject.position.Y = DidJS.Game.world.getBoundaryOnYMin();
