@@ -29,6 +29,10 @@ require(['core/didjs'], function(DidJS) {
 			fillStyle : "red"
 		})
 
+		var _padSpeed = 7;
+
+		pad.speed = 0;
+
 		var ball = DidJS.Game.create('circle').withProperties({
 			position : new DidJS.Vector(200, 300),
 			radius : 4,
@@ -55,7 +59,26 @@ require(['core/didjs'], function(DidJS) {
 			}
 		}
 
+		pad.onBoundaryCollision = function(boundaryStatus) {
+			if (boundaryStatus.onXMax){
+				this.position.X = width - this.width;
+				pad.speed = 0;
+			}
+			if (boundaryStatus.onXMin){
+				this.position.X = 0;
+				pad.speed = 0;
+			}
+		}
+
 		var keyboard = DidJS.Game.createKeyboard().connectTo(pad);
+
+		keyboard.redefineKey('left', function() {
+			pad.position.X -= _padSpeed;
+		})
+
+		keyboard.redefineKey('right', function() {
+			pad.position.X += _padSpeed;
+		})
 
 		keyboard.redefineKey('up', function() {
 
