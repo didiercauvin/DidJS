@@ -8,6 +8,7 @@ define(['core/Renderer',
 		var _renderer;
 		var _worldObjects = [];
 		var _collider = new Collider(_worldObjects);
+		var _collisionObjects = [];
 
 		_renderer = new Renderer(canvasName, width, height);
 
@@ -56,12 +57,27 @@ define(['core/Renderer',
 					}
 				}
 
+				var collisionObjects = _collisionObjects[obj.id];
+				if (collisionObjects) {
+					collisionObjects.forEach(function(cObject) {
+						if (obj.position.Y + obj.posYForCollision >= cObject.position.Y &&
+							(obj.position.X - obj.posXForCollision <= cObject.position.X + cObject.width && obj.position.X + obj.posXForCollision >= cObject.position.X)) {
+							obj.onCollisionWith(cObject, 'top');
+						}
+					})
+				}
+
+
 				 DidJS.AnimationManager.animate(obj);
 				 _renderer.draw(obj);
 
 			});
 
 			requestAnimationFrame(gameLoop);
+		}
+
+		this.setCollisionObjects = function(gameObject, collisionObjects) {
+			_collisionObjects[gameObject.id] = collisionObjects;
 		}
 
 		this.render = function() {

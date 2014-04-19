@@ -10,6 +10,7 @@ require(['core/didjs'], function(DidJS) {
 	function gameInit() {
 		DidJS.Game.world = new DidJS.World('mycanvas');
 		var width = 400, height = 330;
+		var _padSpeed = 7;
 
 		DidJS.Game.world.setBoundariesOnX(0, width);
 		DidJS.Game.world.setBoundariesOnY(0, height);
@@ -29,9 +30,7 @@ require(['core/didjs'], function(DidJS) {
 			fillStyle : "red"
 		})
 
-		var _padSpeed = 7;
-
-		pad.speed = 0;
+		pad.id = 'mypad';
 
 		var ball = DidJS.Game.create('circle').withProperties({
 			position : new DidJS.Vector(200, 300),
@@ -41,6 +40,10 @@ require(['core/didjs'], function(DidJS) {
 			filled : true,
 			fillStyle : "blue"
 		});
+
+		DidJS.Game.world.setCollisionObjects(ball, [
+				pad
+			]);
 
 		var angleX = 2, angleY = -4;
 
@@ -54,8 +57,21 @@ require(['core/didjs'], function(DidJS) {
 				angleX *= -1;
 			}
 
-			if (boundaryStatus.onYMin || boundaryStatus.onYMax) {
+			if (boundaryStatus.onYMin) {
 				angleY *= -1;
+			}
+
+			if (boundaryStatus.onYMax) {
+				angleY *= 0;
+				angleX *= 0;
+			}
+		}
+
+		ball.onCollisionWith = function(object, where) {
+			if (object.id === 'mypad') {
+				if (where === 'top') {
+					angleY *= -1;
+				}
 			}
 		}
 
