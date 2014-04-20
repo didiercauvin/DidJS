@@ -26,6 +26,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createCircle = function(properties) {
 			return  {
+				type : 'circle',
 				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,
@@ -51,6 +52,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createSquare = function(properties) {
 			return  {
+				type : 'square',
 				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,
@@ -74,6 +76,7 @@ define(['core/ShapeRenderer'], function(ShapeRenderer) {
 
 		var createRectangle = function(properties) {
 			return {
+				type : 'rectangle',
 				id : properties.resourceInfo.id,
 				position : properties.position,
 				image : properties.resourceInfo.resource,

@@ -17,8 +17,11 @@ require(['core/didjs'], function(DidJS) {
 
 		var padWidth = 50, padHeight = 10;
 
-		var posPadX = (width / 2) - (padWidth / 4);
+		var posPadX = (width / 2) - (padWidth / 4) - 20;
 		var posPadY = height - 5;
+
+		var brickWidth = 40;
+		var brickHeight = 20;
 
 		var pad = DidJS.Game.create('rectangle').withProperties({
 			position : new DidJS.Vector(posPadX, posPadY),
@@ -33,7 +36,7 @@ require(['core/didjs'], function(DidJS) {
 		pad.id = 'mypad';
 
 		var ball = DidJS.Game.create('circle').withProperties({
-			position : new DidJS.Vector(200, 300),
+			position : new DidJS.Vector(200, 100),
 			radius : 4,
 			velX : 1,
 			velY : 1,
@@ -41,11 +44,33 @@ require(['core/didjs'], function(DidJS) {
 			fillStyle : "blue"
 		});
 
+		var brick1 = DidJS.Game.create('rectangle').withProperties({
+			position : new DidJS.Vector(300, 90),
+			width : brickWidth,
+			height : brickHeight,
+			filled : true,
+			fillStyle : "yellow"
+		});
+
+		brick1.id = 'brick1';
+
+		var brick2 = DidJS.Game.create('rectangle').withProperties({
+			position : new DidJS.Vector(100, 90),
+			width : brickWidth,
+			height : brickHeight,
+			filled : true,
+			fillStyle : "yellow"
+		});
+
+		brick2.id = 'brick2';
+
 		DidJS.Game.world.setCollisionObjects(ball, [
-				pad
+				pad,
+				brick1,
+				brick2
 			]);
 
-		var angleX = 2, angleY = -4;
+		var angleX = 2, angleY = -4 /*-4*/;
 
 		ball.onTick = function() {
 			this.position.X += 1 * angleX;
@@ -68,11 +93,19 @@ require(['core/didjs'], function(DidJS) {
 		}
 
 		ball.onCollisionWith = function(object, where) {
-			if (object.id === 'mypad') {
-				if (where === 'top') {
+			//if (object.id === 'mypad' || object.id === 'brick1' || object.id === 'brick2') {
+				
+				
+				if (where === 'top' || where === 'bottom') {
 					angleY *= -1;
+					this.position.Y += 1 * angleY;
 				}
-			}
+
+				if (where === 'right' || where === 'left') {
+					angleX *= -1;
+					this.position.X += 1 * angleX;
+				}
+			//}
 		}
 
 		pad.onBoundaryCollision = function(boundaryStatus) {
@@ -106,6 +139,8 @@ require(['core/didjs'], function(DidJS) {
 
 		DidJS.Game.world.add(ball);
 		DidJS.Game.world.add(pad);
+		DidJS.Game.world.add(brick1);
+		DidJS.Game.world.add(brick2);
 
 		DidJS.Game.world.render();
 	}
