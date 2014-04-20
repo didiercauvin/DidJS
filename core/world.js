@@ -9,6 +9,7 @@ define(['core/Renderer',
 		var _worldObjects = [];
 		var _collider = new Collider(_worldObjects);
 		var _collisionObjects = [];
+		this.tickStopped = false;
 
 		_renderer = new Renderer(canvasName, width, height);
 
@@ -60,46 +61,26 @@ define(['core/Renderer',
 				var collisionObjects = _collisionObjects[obj.id];
 				if (collisionObjects) {
 					collisionObjects.forEach(function(cObject) {
-						var collisionResult = _collider.circleCollision(cObject, obj);
-						if (collisionResult !== '') {
-					    	obj.onCollisionWith(cObject, collisionResult);
-
+						if (obj.type === 'circle') {
+							var collisionResult = _collider.circleCollision(cObject, obj);
+							if (collisionResult !== '') {
+						    	obj.onCollisionWith(cObject, collisionResult);
+							}
 						}
-					 //    if (obj.position.Y - cObject.position.Y > 0 && 
-						//  	obj.position.Y - obj.radius <= cObject.position.Y + cObject.height &&
-					 //    	 Math.abs(cObject.position.X - obj.position.X) <= obj.radius) {
-					 //    		obj.onCollisionWith(cObject, 'left');
-					 //    }
-
-					 //    else if (obj.position.Y - cObject.position.Y > 0 && 
-						//  	obj.position.Y - obj.radius <= cObject.position.Y + cObject.height &&
-					 //    	 Math.abs(cObject.position.X + cObject.width - obj.position.X) <= obj.radius) {
-					 //    		obj.onCollisionWith(cObject, 'right');
-					 //    }
-
-						// else if (obj.position.Y - cObject.position.Y < 0 && 
-						// 	obj.position.Y + obj.posYForCollision >= cObject.position.Y &&
-						// 	(obj.position.X - obj.posXForCollision <= cObject.position.X + cObject.width && obj.position.X + obj.posXForCollision >= cObject.position.X)) {
-						// 		obj.onCollisionWith(cObject, 'top');
-						// }
-
-						// else if (obj.position.Y - obj.posYForCollision - cObject.position.Y > 0 &&
-						// 	obj.position.Y - obj.posYForCollision <= cObject.position.Y + cObject.height &&
-						// 	(obj.position.X - obj.posXForCollision <= cObject.position.X + cObject.width && obj.position.X + obj.posXForCollision >= cObject.position.X)) {
-						// 		obj.onCollisionWith(cObject, 'bottom');	
-						// }
-
-					})
+					});
 				}
-
 
 				 DidJS.AnimationManager.animate(obj);
 				 _renderer.draw(obj);
 
 			});
 
-			requestAnimationFrame(gameLoop);
+			if (!self.tickStopped) {
+				requestAnimationFrame(gameLoop);
+			}
 		}
+
+		
 
 		this.setCollisionObjects = function(gameObject, collisionObjects) {
 			_collisionObjects[gameObject.id] = collisionObjects;

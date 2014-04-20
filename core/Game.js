@@ -51,11 +51,11 @@ define(['core/Loaders/ResourceLoader',
 			}
 		}
 
-		var getResource = function(name) {
+		this.getResource = function(name) {
 			var res = null;
 			_resourcesInfo.forEach(function(resourceInfo) {
 				resourceInfo.resources.forEach(function(r) {
-					if (r .id === name) {
+					if (r.id === name) {
 						res = r;
 						return;
 					}
@@ -74,9 +74,10 @@ define(['core/Loaders/ResourceLoader',
 		}
 
 		this.createGameObject = function(resourceName, shapeType) {
+			var self = this;
 			return {
 				withProperties : function(properties) {
-					properties.resourceInfo = getResource(resourceName);
+					properties.resourceInfo = self.getResource(resourceName);
 					properties.sourceX = 0;
 					properties.sourceY = 0;
 					return _shapeFactory.create(shapeType, properties);
@@ -105,6 +106,10 @@ define(['core/Loaders/ResourceLoader',
 					
 				}
 			}
+		}
+
+		this.stopTick = function() {
+			this.world.tickStopped = true;
 		}
 
 		this.setAnimation = function(animationName, animate) {

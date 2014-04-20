@@ -1,13 +1,25 @@
 require(['core/didjs'], function(DidJS) {
+	var self = this;
+
+	var loadLevels = function() {
+		var registeredLevels = DidJS.Game.register('Resources/Arkanodid/').asPathFor('Files')
+			.load([{ name : 'level1', file : 'level1.txt' }], self.gameInit)
 	
+		registeredLevels.onerror = function(error) {
+			alert(error);
+		}
+	}
+
 	var registeredPath = DidJS.Game.register('Resources/Arkanodid/').asPathFor('Images')
-				.load([{ Name : 'ball', file : 'ball.gif' }], gameInit);
+				.load([{ name : 'ball', file : 'ball.gif' }], loadLevels);
 
 	registeredPath.onerror = function(error) {
 		alert(error);
 	};
+
 	
-	function gameInit() {
+
+	this.gameInit = function() {
 		DidJS.Game.world = new DidJS.World('mycanvas');
 		var width = 400, height = 330;
 		var _padSpeed = 7;
@@ -44,31 +56,69 @@ require(['core/didjs'], function(DidJS) {
 			fillStyle : "blue"
 		});
 
-		var brick1 = DidJS.Game.create('rectangle').withProperties({
-			position : new DidJS.Vector(300, 90),
-			width : brickWidth,
-			height : brickHeight,
-			filled : true,
-			fillStyle : "yellow"
+
+		var _bricks = null;
+		
+		var boxx = 2;
+		var boxy = 10;
+
+		var level1 = DidJS.Game.getResource('level1');
+		if (level1 != null) {
+			var createBrick = function(value, x, y) {
+				var brick = DidJS.Game.create('rectangle').withProperties({
+					position : new DidJS.Vector(boxx + (brickWidth * x), boxy + (brickHeight * y)),
+					width : brickWidth,
+					height : brickHeight,
+					filled : true,
+					fillStyle : "yellow"
+				});
+
+				brick.id = 'brick' + x + '_' + y;
+
+				return brick;
+			}
+
+			function fillBricks(oData) {
+				var level = oData;
+				var levels = level.split(/[\r\n]+/);
+				var cntBricks = 0;
+				_bricks = new Array(levels.length);
+				for (var l = 0; l < levels.length; l++) {
+					_bricks[l] = new Array(levels[l].length);
+					for (var b = 0; b < levels[l].length; b++) {
+						if (levels[l][b] == "0") {
+							_bricks[l][b] = null;
+						}
+						else {
+							_bricks[l][b] = createBrick(levels[l][b], b, l);
+							// if (levels[l][b] != "x") {
+							// 	var randomnumber = Math.floor(Math.random() * brickBonus.length);
+							// 	if (levels[l][b] >= 2) {
+							// 		_bricks[l][b].bonus = new bonus('bonus1', brickBonus[randomnumber], _bricks[l][b].posXInf, _bricks[l][b].posYSup);
+							// 		bonuss.push(_bricks[l][b].bonus);
+							// 	}
+							// 	cntBricks += 1;
+							// }
+						}
+					}
+				}
+				totalBricks = cntBricks;
+			}
+
+			fillBricks(level1.resource);
+		}
+
+		var ballCollisionObjects = [pad];
+
+		_bricks.forEach(function(brick) {
+			brick.forEach(function(b) {
+				if (b !== null) {
+					ballCollisionObjects.push(b);
+				}
+			})
 		});
 
-		brick1.id = 'brick1';
-
-		var brick2 = DidJS.Game.create('rectangle').withProperties({
-			position : new DidJS.Vector(100, 90),
-			width : brickWidth,
-			height : brickHeight,
-			filled : true,
-			fillStyle : "yellow"
-		});
-
-		brick2.id = 'brick2';
-
-		DidJS.Game.world.setCollisionObjects(ball, [
-				pad,
-				brick1,
-				brick2
-			]);
+		DidJS.Game.world.setCollisionObjects(ball, ballCollisionObjects);
 
 		var angleX = 2, angleY = -4 /*-4*/;
 
@@ -87,25 +137,22 @@ require(['core/didjs'], function(DidJS) {
 			}
 
 			if (boundaryStatus.onYMax) {
+				DidJS.Game.stopTick();
 				angleY *= 0;
 				angleX *= 0;
 			}
 		}
 
 		ball.onCollisionWith = function(object, where) {
-			//if (object.id === 'mypad' || object.id === 'brick1' || object.id === 'brick2') {
-				
-				
-				if (where === 'top' || where === 'bottom') {
-					angleY *= -1;
-					this.position.Y += 1 * angleY;
-				}
+			if (where === 'top' || where === 'bottom') {
+				angleY *= -1;
+				this.position.Y += 1 * angleY;
+			}
 
-				if (where === 'right' || where === 'left') {
-					angleX *= -1;
-					this.position.X += 1 * angleX;
-				}
-			//}
+			if (where === 'right' || where === 'left') {
+				angleX *= -1;
+				this.position.X += 1 * angleX;
+			}
 		}
 
 		pad.onBoundaryCollision = function(boundaryStatus) {
@@ -139,8 +186,13 @@ require(['core/didjs'], function(DidJS) {
 
 		DidJS.Game.world.add(ball);
 		DidJS.Game.world.add(pad);
-		DidJS.Game.world.add(brick1);
-		DidJS.Game.world.add(brick2);
+		_bricks.forEach(function(brick) {
+			brick.forEach(function(b) {
+				if (b !== null) {
+					DidJS.Game.world.add(b);
+				}
+			})
+		})
 
 		DidJS.Game.world.render();
 	}
