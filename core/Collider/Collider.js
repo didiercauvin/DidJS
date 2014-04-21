@@ -23,6 +23,33 @@ define(function() {
 			}
 		}
 
+		this.collideWithBorders = function(borderXMin, borderXMax, borderYMin, borderYMax, obj) {
+			var whichBoundary = {
+				onXMin : false,
+				onYMin : false,
+				onXMax : false,
+				onYMax : false
+			}
+
+			if (obj.position.X - obj.getShiftValues().shiftX < borderXMin) {
+				whichBoundary.onXMin = true;
+			}
+
+			if (obj.position.X + obj.width > borderXMax) {
+				whichBoundary.onXMax = true;
+			}
+
+			if (obj.position.Y - obj.getShiftValues().shiftY < borderYMin) {
+				whichBoundary.onYMin = true;
+			}
+
+			if (obj.position.Y + obj.height > borderYMax) {
+				whichBoundary.onYMax = true;
+			}
+
+			return whichBoundary;
+		}
+
 		this.collisionBetweenAABBs = function(aabb1, aabb2) {
 			var coordonatesAABB1 = getCoordonnatesMinAndMaxFor(aabb1);
 			var coordonatesAABB2 = getCoordonnatesMinAndMaxFor(aabb2);

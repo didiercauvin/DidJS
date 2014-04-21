@@ -138,8 +138,6 @@ require(['core/didjs'], function(DidJS) {
 
 			if (boundaryStatus.onYMax) {
 				DidJS.Game.stopTick();
-				angleY *= 0;
-				angleX *= 0;
 			}
 		}
 

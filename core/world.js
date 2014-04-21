@@ -14,30 +14,7 @@ define(['core/Renderers/Renderer',
 		_renderer = new Renderer(canvasName, width, height);
 
 		this.getBoundariesStatusFor = function(obj) {
-			var whichBoundary = {
-				onXMin : false,
-				onYMin : false,
-				onXMax : false,
-				onYMax : false
-			}
-
-			if (obj.position.X - obj.getShiftValues().shiftX < _boundaryOnXMin) {
-				whichBoundary.onXMin = true;
-			}
-
-			if (obj.position.X + obj.width > _boundaryOnXMax) {
-				whichBoundary.onXMax = true;
-			}
-
-			if (obj.position.Y - obj.getShiftValues().shiftY < _boundaryOnYMin) {
-				whichBoundary.onYMin = true;
-			}
-
-			if (obj.position.Y + obj.position.height > _boundaryOnYMax) {
-				whichBoundary.onYMax = true;
-			}
-
-			return whichBoundary;
+			return _collider.collideWithBorders(_boundaryOnXMin, _boundaryOnXMax, _boundaryOnYMin, _boundaryOnYMax, obj);
 		}
 
 		var gameLoop = function() {
