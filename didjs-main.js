@@ -82,6 +82,11 @@ require(['core/didjs'], function(DidJS) {
 
 		DidJS.Game.initializeAnimations([animationIdleLuigi]).to(luigi);
 
+		DidJS.Game.world.setCollisionObjects(player, [luigi]);
+
+		player.onCollisionWith = function(object, where) {
+			this.position.X = 700;
+		}
 
 		luigi.onTick = function() {
 			this.position.X  += 1 * this.direction;

@@ -62,13 +62,19 @@ define(['core/Renderers/Renderer',
 				}
 
 				var collisionObjects = _collisionObjects[obj.id];
-				if (collisionObjects) {
+				if (collisionObjects && obj.onCollisionWith) {
 					collisionObjects.forEach(function(cObject) {
 						if (obj.type === 'circle') {
 							var collisionResult = _collider.circleCollision(cObject, obj);
 							if (collisionResult !== '') {
 						    	obj.onCollisionWith(cObject, collisionResult);
 							}
+						}
+						else {
+							if (_collider.collisionBetweenAABBs(cObject, obj)) {
+								obj.onCollisionWith(cObject);
+							}
+
 						}
 					});
 
