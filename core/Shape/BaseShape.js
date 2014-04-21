@@ -7,6 +7,7 @@ define(function() {
 		this.filled = filled;
 		this.fillStyle = fillStyle;
 		this.position = new DidJS.Vector(x, y);
+		this.visible = true;
 	}
 
 	BaseShape.prototype.getShiftValues = function() {

@@ -53,7 +53,7 @@ require(['core/didjs'], function(DidJS) {
 			velX : 1,
 			velY : 1,
 			filled : true,
-			fillStyle : "blue"
+			fillStyle : "black"
 		});
 
 
@@ -72,6 +72,10 @@ require(['core/didjs'], function(DidJS) {
 					filled : true,
 					fillStyle : "yellow"
 				});
+
+				if (value === "2") {
+					brick.fillStyle = 'blue';
+				}
 
 				brick.id = 'brick' + x + '_' + y;
 
@@ -150,6 +154,10 @@ require(['core/didjs'], function(DidJS) {
 			if (where === 'right' || where === 'left') {
 				angleX *= -1;
 				this.position.X += 1 * angleX;
+			}
+
+			if (object.id.substring(0, 5) === "brick") {
+				DidJS.Game.world.remove(object);
 			}
 		}
 
