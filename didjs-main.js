@@ -13,8 +13,8 @@ require(['core/didjs'], function(DidJS) {
 	function gameInit() {
 		DidJS.Game.world = new DidJS.World('mycanvas');
 
-		DidJS.Game.world.setBoundariesOnX(0, 400);
-		DidJS.Game.world.setBoundariesOnY(0, 330);
+		DidJS.Game.world.setBoundariesOnX(0, 800);
+		DidJS.Game.world.setBoundariesOnY(0, 600);
 
 
 		var player = DidJS.Game.createGameObject('mario', 'rectangle').withProperties({
@@ -101,7 +101,7 @@ require(['core/didjs'], function(DidJS) {
 		DidJS.Game.setAnimation("idle", true).to(luigi);
 
 		DidJS.Game.world.add(player);
-		//DidJS.Game.world.add(luigi);
+		DidJS.Game.world.add(luigi);
 
 
 		DidJS.Game.world.render();

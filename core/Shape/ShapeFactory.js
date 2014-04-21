@@ -35,6 +35,13 @@ define(['core/Renderers/ShapeRenderer', 'core/Shape/Circle', 'core/Shape/Rectang
 				properties.fillStyle
 			);
 
+			circle.image = properties.resourceInfo.resource;
+			circle.sourceX = properties.sourceX;
+			circle.sourceY = properties.sourceY;
+			circle.animations = properties.animations;
+			circle.velX = properties.velX;
+			circle.velY = properties.velY;
+
 			return circle;
 
 			// return  {
@@ -64,6 +71,13 @@ define(['core/Renderers/ShapeRenderer', 'core/Shape/Circle', 'core/Shape/Rectang
 				properties.filled,
 				properties.fillStyle
 			);
+
+			square.image = properties.resourceInfo.resource;
+			square.sourceX = properties.sourceX;
+			square.sourceY = properties.sourceY;
+			square.animations = properties.animations;
+			square.velX = properties.velX;
+			square.velY = properties.velY;
 
 			return square;
 
@@ -101,6 +115,13 @@ define(['core/Renderers/ShapeRenderer', 'core/Shape/Circle', 'core/Shape/Rectang
 				properties.filled,
 				properties.fillStyle
 			);
+
+			rectangle.image = properties.resourceInfo.resource;
+			rectangle.sourceX = properties.sourceX;
+			rectangle.sourceY = properties.sourceY;
+			rectangle.animations = properties.animations;
+			rectangle.velX = properties.velX;
+			rectangle.velY = properties.velY;
 
 			return rectangle;
 

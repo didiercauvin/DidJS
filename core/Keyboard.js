@@ -112,8 +112,8 @@ define(function() {
 			var gObject = this.parent;
 			return { 
 				toXAxis : function(direction) {
-					var x = gObject.position.X + (gObject.velX * direction);
-					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(x, gObject.position.Y, gObject.width, gObject.height, gObject.posXForCollision, gObject.posYForCollision);
+					gObject.position.X = gObject.position.X + (gObject.velX * direction);
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject);
 
 					if (boundariesStatus.onXMin) {
 						gObject.position.X = DidJS.Game.world.getBoundaryOnXMin();
@@ -121,22 +121,16 @@ define(function() {
 					else if (boundariesStatus.onXMax) {
 						gObject.position.X = DidJS.Game.world.getBoundaryOnXMax() - gObject.width; 
 					}
-					else {
-						gObject.position.X = x;
-					}
 				},
 				toYAxis : function(direction) {
-					var y = gObject.position.Y + gObject.velY * direction;
-					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject.position.X, y, gObject.width, gObject.height, gObject.posXForCollision, gObject.posYForCollision);
+					gObject.position.Y = gObject.position.Y + gObject.velY * direction;
+					var boundariesStatus = DidJS.Game.world.getBoundariesStatusFor(gObject);
 
 					if (boundariesStatus.onYMin) {
 						gObject.position.Y = DidJS.Game.world.getBoundaryOnYMin();
 					}
 					else if (boundariesStatus.onYMax) {
 						gObject.position.Y = DidJS.Game.world.getBoundaryOnYMax() - gObject.height; 
-					}
-					else {
-						gObject.position.Y = y;
 					}
 					
 				}
