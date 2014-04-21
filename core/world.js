@@ -1,6 +1,6 @@
 var DidJS = DidJS || {};
 
-define(['core/Renderer',
+define(['core/Renderers/Renderer',
 	    'core/Collider/Collider'], function(Renderer, Collider) {
 	DidJS.World = function(canvasName, width, height) {
 		var self = this;
@@ -13,7 +13,7 @@ define(['core/Renderer',
 
 		_renderer = new Renderer(canvasName, width, height);
 
-		this.getBoundariesStatusFor = function(x, y, width, height, posXForCollision, posYForCollision) {
+		this.getBoundariesStatusFor = function(x, y, width, height) {
 			var whichBoundary = {
 				onXMin : false,
 				onYMin : false,
@@ -21,7 +21,7 @@ define(['core/Renderer',
 				onYMax : false
 			}
 
-			if (x - posXForCollision < _boundaryOnXMin) {
+			if (x < _boundaryOnXMin) {
 				whichBoundary.onXMin = true;
 			}
 
@@ -29,7 +29,7 @@ define(['core/Renderer',
 				whichBoundary.onXMax = true;
 			}
 
-			if (y - posYForCollision < _boundaryOnYMin) {
+			if (y < _boundaryOnYMin) {
 				whichBoundary.onYMin = true;
 			}
 
@@ -51,7 +51,7 @@ define(['core/Renderer',
 					obj.keyboard.stroke();
 				}
 
-				var boundaryStatus = self.getBoundariesStatusFor(obj.position.X, obj.position.Y, obj.width, obj.height, obj.posXForCollision, obj.posYForCollision);
+				var boundaryStatus = self.getBoundariesStatusFor(obj.position.X, obj.position.Y, obj.width, obj.height);
 				if (boundaryStatus.onXMin || boundaryStatus.onXMax || boundaryStatus.onYMin || boundaryStatus.onYMax) {
 					if (obj.onBoundaryCollision) {
 						obj.onBoundaryCollision(boundaryStatus);

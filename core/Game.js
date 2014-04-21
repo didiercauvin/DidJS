@@ -1,5 +1,5 @@
 define(['core/Loaders/ResourceLoader', 
-	    'core/ShapeFactory', 
+	    'core/Shape/ShapeFactory', 
 	    'core/Keyboard'], function(ResourceLoader, ShapeFactory, Keyboard) {
 	 function Game() {
 		var _resourcesInfo = [];
