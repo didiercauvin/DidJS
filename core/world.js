@@ -13,7 +13,7 @@ define(['core/Renderers/Renderer',
 
 		_renderer = new Renderer(canvasName, width, height);
 
-		this.getBoundariesStatusFor = function(x, y, width, height) {
+		this.getBoundariesStatusFor = function(obj) {
 			var whichBoundary = {
 				onXMin : false,
 				onYMin : false,
@@ -21,19 +21,19 @@ define(['core/Renderers/Renderer',
 				onYMax : false
 			}
 
-			if (x < _boundaryOnXMin) {
+			if (obj.position.X - obj.getShiftValues().shiftX < _boundaryOnXMin) {
 				whichBoundary.onXMin = true;
 			}
 
-			if (x + width > _boundaryOnXMax) {
+			if (obj.position.X + obj.width > _boundaryOnXMax) {
 				whichBoundary.onXMax = true;
 			}
 
-			if (y < _boundaryOnYMin) {
+			if (obj.position.Y - obj.getShiftValues().shiftY < _boundaryOnYMin) {
 				whichBoundary.onYMin = true;
 			}
 
-			if (y + height > _boundaryOnYMax) {
+			if (obj.position.Y + obj.position.height > _boundaryOnYMax) {
 				whichBoundary.onYMax = true;
 			}
 
@@ -51,7 +51,7 @@ define(['core/Renderers/Renderer',
 					obj.keyboard.stroke();
 				}
 
-				var boundaryStatus = self.getBoundariesStatusFor(obj.position.X, obj.position.Y, obj.width, obj.height);
+				var boundaryStatus = self.getBoundariesStatusFor(obj);
 				if (boundaryStatus.onXMin || boundaryStatus.onXMax || boundaryStatus.onYMin || boundaryStatus.onYMax) {
 					if (obj.onBoundaryCollision) {
 						obj.onBoundaryCollision(boundaryStatus);

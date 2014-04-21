@@ -10,6 +10,13 @@ define(['core/Shape/BaseShape', 'core/Renderers/ShapeRenderer'], function(BaseSh
 
 	Circle.prototype = Object.create(BaseShape.prototype);
 
+	Circle.prototype.getShiftValues = function() {
+		return {
+			shiftX : this.radius,
+			shiftY : this.radius
+		};
+	}
+
 	Circle.prototype.draw = function(ctx) {
 		ShapeRenderer.drawCircle(this, ctx);
 	}

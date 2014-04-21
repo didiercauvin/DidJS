@@ -9,6 +9,13 @@ define(function() {
 		this.position = new DidJS.Vector(x, y);
 	}
 
+	BaseShape.prototype.getShiftValues = function() {
+		return {
+			shiftX : 0,
+			shiftY : 0
+		};
+	}
+
 	BaseShape.prototype.draw = function(ctx) {
 
 	}
